@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Interactive Psychology 101 Mind Map - A comprehensive visual study guide for undergraduate psychology students covering all major topics in a one-semester introductory course.">
+    <title>Psychology 101 Mind Map | Interactive Study Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="18" stroke="url(#logo-gradient)" stroke-width="2.5" />
+                            <path
+                                d="M20 8C15.5 8 12 11.5 12 16C12 18.5 13 20.5 14.5 22C16 23.5 17 25 17 27V28H23V27C23 25 24 23.5 25.5 22C27 20.5 28 18.5 28 16C28 11.5 24.5 8 20 8Z"
+                                stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M17 31H23" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" />
+                            <path d="M18 34H22" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" />
+                            <defs>
+                                <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#8B5CF6" />
+                                    <stop offset="1" stop-color="#EC4899" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1>Psychology 101</h1>
+                    <span class="subtitle">Interactive Mind Map</span>
+                </div>
+                <div class="header-actions">
+                    <button id="expandAll" class="btn btn-secondary">
+                        <span class="btn-icon">⊕</span>
+                        Expand All
+                    </button>
+                    <button id="collapseAll" class="btn btn-secondary">
+                        <span class="btn-icon">⊖</span>
+                        Collapse All
+                    </button>
+                    <button id="toggleTheme" class="btn btn-icon-only" title="Toggle Theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="M21 21l-4.35-4.35" />
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Search topics, concepts, or terms...">
+                    <kbd class="search-kbd">Ctrl+K</kbd>
+                </div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-label">Study Progress</span>
+                    <div class="progress-controls">
+                        <span class="progress-value" id="progressValue">0%</span>
+                        <button class="reset-btn" id="resetProgress" title="Reset all progress">↺</button>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Mind Map Container -->
+            <div class="mindmap-container" id="mindmapContainer">
+                <!-- Central Node -->
+                <div class="central-node" id="centralNode">
+                    <div class="central-content">
+                        <div class="central-icon">🧠</div>
+                        <h2>Psychology 101</h2>
+                        <p>The Scientific Study of Mind & Behavior</p>
+                    </div>
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
+                </div>
+
+                <!-- Topic Branches will be generated by JavaScript -->
+                <div class="branches-container" id="branchesContainer"></div>
+            </div>
+
+            <!-- Topic Detail Panel -->
+            <div class="detail-panel" id="detailPanel">
+                <button class="detail-close" id="detailClose">×</button>
+                <div class="detail-content" id="detailContent">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>📚 Click on any topic to explore • 🧠 Click brain icons to test yourself • Progress tracks correct
+                answers</p>
+        </footer>
+    </div>
+
+    <!-- Term Definition Tooltip -->
+    <div class="term-tooltip" id="termTooltip">
+        <div class="term-tooltip-header">
+            <span class="term-tooltip-title" id="termTooltipTitle"></span>
+            <button class="term-tooltip-close" id="termTooltipClose">×</button>
+        </div>
+        <p class="term-tooltip-definition" id="termTooltipDefinition"></p>
+    </div>
+    <div class="tooltip-overlay" id="tooltipOverlay"></div>
+
+    <!-- Quiz Modal -->
+    <div class="quiz-modal" id="quizModal">
+        <div class="quiz-header">
+            <div class="quiz-header-title">
+                <span class="quiz-header-icon">🧠</span>
+                <span>Quick Quiz</span>
+            </div>
+            <button class="quiz-close" id="quizClose">×</button>
+        </div>
+        <div class="quiz-content">
+            <p class="quiz-question" id="quizQuestion"></p>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-result hidden" id="quizResult"></div>
+        </div>
+    </div>
+    <div class="quiz-overlay" id="quizOverlay"></div>
+
+
+    <script src="definitions.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
